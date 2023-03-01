@@ -1,59 +1,137 @@
-# Graduation Project
+# PWA
 
-## Root Variables
-<br>
+## Setting it up Requirements
 
-### *Colors*
-- clr-primary: #main-color
-- clr-danger: #red
-- clr-success: #green
-- clr-warning: #orange
-- clr-white: #white
-- clr-info-dark: #tends to gray
-- clr-info-light: #tends to white
-- clr-light: #light_color
-- clr-dark: #dark_color
-- clr-primary-variant: #darker of primary
-- clr-dark-variant: #lighter of primary (for darkmode purposes)
-- clr-background: #your_background-color (tends to white)
-    <br><br>
-
-### *Widget numbers*
-- widget-border-radius: 2rem
-- br-sm: 0.4rem 
-- br-md: 0.8rem
-- br-lg: 1.2rem
-- widget-padding: 1.8rem
-- padding: 1.2rem
-    <br><br>
-
-### *box shadow*
-- box-shadow: 0 2rem 3rem var(--clr-light)
-<br><br>
-
-### *Reseting Values*
-- hyper links < a >
-  - color: --clr-dark
-- heading 1:
-  - font-size: 1.8rem
-  - font-weight: 800
-- heading 2:
-  - font-size: 1.4rem
-- heading 3:
-  - font-size: 0.87rem
-- heading 4:
-  - font-size: 0.8rem
-- heading 5:
-  - font-size: 0.77rem
-- small:
-  - font-size: 0.75rem
+1. `manifest.js` <span style="margin: 0 10px;"> OR </span> `manifest. webmanifest` File to work offline 
+2. serivce worker
 
 <br>
 
-### *Main components*
-- profile-logo:
-  - width: 2.8rem
-  - height: 2.8rem
-  - border-raduis: 50%
-  - overflow: hidden
+## Manifest Structure:
+- `name` the full name (appears in splash screen)
+- `short_name` the short name (appears in phone home screen)   
+- `icons` it is an array of icons properitese for all screen resolutions 
+- `start_url` it determines which screens will show on app lunch (./index.html)
+- `display` you should set it to ***standalone*** to make the website instalable
+- `background_color` splash screen background color along with the icon
+- `theme_color` color for the label of the app in app switcher *when you dounble click on the home screen* 
 
+<br>
+
+## Fixing IOS issues
+### meta tags
+- apple-mobile-web-app-capable(content="yes")
+- apple-mobile-web-app-status-bar-style 
+  - default/black
+  - use the full screen
+  - make the status bar translucent
+
+*WARNING:  when you go full screen you lose access to safari back button, so you have to provide navigaion inside your app*
+
+<br>
+
+## Installing Prompt
+1. Web App Manifest with atlest 192x192 app icon
+2. Work Offline
+
+### Handling installing prompt
+1. Listen for the `beforeinstallprompt` event
+2. Notify the user that your app can be installed
+3. Show the prompt by calling the `prompt()`
+
+<br>
+
+``` javascript
+   let deferredPrompt;
+
+   window.addEventListener('beforeinstallprompt', (e)=>{
+   
+   // prevent chrome automatically showing the prompt
+    e.preventDefault();
+
+    deferredPrompt = e;
+
+    // updating the ui and showing your custome button for the installation process
+    // offering your prompt after the user complete his profile information
+    btnAdd.style.display = "block";
+
+    deferredPrompt.propmt()
+    deferredPrompt.userChoice.then((choiceResult) =>{
+      if(choiceResult.outcome === 'accepted'){
+        console.log("user accepted the A2HS prompt")
+      }
+
+      deferredPrompt = null;
+    })
+   })
+
+```
+<br>
+
+## all the previous `code` was before installation
+### Confirmig instalations
+
+<br>
+
+```javascript
+  window.addEventListener('appinstalled', (evt)=>{
+    eapp.logEvent('a2hs', 'installed')
+  })
+```
+<br>
+
+## Detecting home screen launche
+
+<br>
+
+```css
+/* Using CSS */
+  @media all and (display-mode: standalone){
+    body{
+      background-color: yellow;
+    }
+  }
+```
+
+## <div style="text-align: center">OR</div>
+
+<br>
+
+```javascript
+  // using Javascript
+  window.matchMedia('(display-mode: standalone)')
+ ```
+
+
+## <div style="text-align: center">OR</div>
+
+<br>
+
+```js
+// in mamifest.webmanifest
+"start_url": "/index.html>from=homescreen",
+"display": "standalone",
+
+// get advantage to use analytics to see how many people are installing your PWA 
+...
+```
+
+<br>
+<hr>
+
+
+## Converting Ordinery Website to PWA
+1. write a basic service worker `sw.js`
+
+```js
+// This code executes in its own worker or thread
+self.addEventListener("install", event => {
+   console.log("Service worker installed");
+});
+self.addEventListener("activate", event => {
+   console.log("Service worker activated");
+});
+self.addEventListener("fetch", event => {
+   console.log("fetch intercepted for:", event.request.url);
+});
+```
