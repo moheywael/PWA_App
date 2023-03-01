@@ -1,0 +1,15 @@
+{
+    "name": "Learning Managment System",
+    "short_name": "LMS",
+    "icons": [
+        {
+            "src": "assets/images/lms-icon.png",
+            "size": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "background_color": "#5451F7",
+    "display": "standalone",
+    "orientation": "portrait",
+    "start_url": "/index.html"
+}
