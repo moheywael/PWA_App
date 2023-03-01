@@ -37,7 +37,33 @@
 
 > - Install itunes
 
-> 
+> - Connect the IOS device with your Windows PC by USB cable and click Trust this device.
+
+> - Install Scoop for Windows:
+
+> - Run Windows Power Shell as administrator and then install these: 
+```powershell
+      scoop bucket add extras
+      scoop install ios-webkit-debug-proxy
+      npm install remotedebug-ios-webkit-adapter -g
+``` 
+
+> - Open iOS Settings => Safari preferences => enable “Web Inspector”
+
+> - In Power Shell run this command: 
+```powershell
+      remotedebug_ios_webkit_adapter --port=9000
+```
+
+> - Open Chrome and navigate to this:
+  ``` 
+      chrome://inspect/#devices 
+  ```
+ <br><br>
+  You will see this and you can click on inspect inside label with RemoteDebug IOS adapter.
+ <br><br>
+
+> - Click on configure and set localhost:9000 
 
 <br> 
 
