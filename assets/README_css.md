@@ -1,5 +1,5 @@
-# SCSS - Scss Partials 
-
+# CSS & SCSS Documentation
+ 
 ## *SCSS File Structure*
 
 ### abstruct
