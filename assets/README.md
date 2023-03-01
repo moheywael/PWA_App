@@ -79,3 +79,29 @@
       - font-size: 24px
       - boder-raduis: 6px
 
+<br><br>
+
+## Optimizing Javascript Code
+<br>
+
+### Useage Of Funcations for your event listener
+
+``` javascript
+  // variables
+  let var1 = document.querySelector('.class1')
+  let var2 = document.querySelector('.class2')
+
+  // Event Listeners
+  var1.addEventListener("click", funcVar1)
+  var2.addEventListener("click", funcVar2)
+
+  // Funcations
+  function funcVar1(){
+    // Code Block 1
+  }
+
+  function funcVar2(){
+    // Code Block 2
+  }
+
+```
