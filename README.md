@@ -117,7 +117,9 @@
 ```
 
 <br>
+
 <hr>
+<br>
 
 
 ## Converting Ordinery Website to PWA
@@ -134,4 +136,83 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
    console.log("fetch intercepted for:", event.request.url);
 });
+```
+
+<br><br>
+
+## Fixing Apple Devives Issues With PWA
+<br>
+
+### **`Step 1` : Make your website a Standalone app**
+<br>
+
+> - Creating a `site.webmanifest` file to the root of your project and adding a display property and set its value to `standalone`.
+
+```js
+    {
+        "display": "standalone",
+
+
+        // OPTIONAL: here you can spicify your app long and short name
+        "name": "app_long_name", //appeared in the splash sceren
+        "short_name": "app_short_name" //appeared in your phone Home sceren
+    }
+``` 
+<br>
+
+> -  link the `site.webmanifest` you just create it to your `index.html`
+<br>
+
+```html
+   <link rel="manifest" href="site.webmanifest">
+``` 
+
+<br>
+
+>   - In the browser in your IOS phone and click `share button` then `add to Home Screen`. That will add you a `shortcut` to your home screen.
+
+<br>
+now your PWA app in your home screen and you have a stand-alone app running in your phone.
+
+<br><br>
+
+### **`Step 2` : Adding Icons And Splash Screens**
+> - We Will use Tool Called **[PWA Assets Generator](https://www.npmjs.com/package/pwa-asset-generator)**. This tool takes a simple `svg icon` then simply generate a bunch of splash screens and icons for different devices. And here is its Link. and this tool will make the heavy lifting work for us. Just visit the website and follow the steps
+
+<br><br>
+
+### **`Step 3` : Make the status bar transparent and fixing the scaling issue**
+> - Add the links bellow to your `index.html` file
+
+```html 
+    <!-- helps the other two links to work -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- make the status bar transparent -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- allows the body to fit the whole scren -->
+    <!-- user-scalable=no. prevent the ability to scaling in your pwa app -->
+    <meta name='viewport' content='initial-scale=1, viewport-fit=cover, user-scalable=no'>
+
+    <!--   -->
+
+
+```
+
+**NOTE:** you have to make some changes to your styles file.
+you can simply fix it by adding a `Media query` to your style file with this conddition
+
+```css
+  @media screen and (display-mode: standalone) {
+    /* 1. adjust your broken styles here */
+
+    /* 2. make your header fixed if exists*/
+
+    /* set the tap Highlight color to transparent */
+    *{
+      -webkit-top-highlight-color: transparent;
+    }
+  } 
+
 ```
